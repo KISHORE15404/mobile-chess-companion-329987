@@ -72,29 +72,34 @@ class AppColors {
 class BoardThemes {
   const BoardThemes._();
 
+  // Black board theme variants (kept as the existing theme IDs so we don't
+  // break persisted user settings that reference them).
+  //
+  // Note: we still keep two tones so the checker pattern remains readable,
+  // while satisfying the request that the board is "black".
   static const BoardTheme classicBlue = BoardTheme(
     id: 'classic_blue',
-    name: 'Classic Blue',
-    lightSquare: Color(0xFFEFF6FF),
-    darkSquare: Color(0xFF93C5FD),
+    name: 'Black',
+    lightSquare: Color(0xFF1B1B1B),
+    darkSquare: Color(0xFF000000),
     highlight: Color(0x6606B6D4), // success with alpha
     lastMove: Color(0x663B82F6), // primary with alpha
   );
 
   static const BoardTheme green = BoardTheme(
     id: 'green',
-    name: 'Green',
-    lightSquare: Color(0xFFF0FDF4),
-    darkSquare: Color(0xFF86EFAC),
+    name: 'Black (Alt)',
+    lightSquare: Color(0xFF202020),
+    darkSquare: Color(0xFF050505),
     highlight: Color(0x6606B6D4),
     lastMove: Color(0x663B82F6),
   );
 
   static const BoardTheme gray = BoardTheme(
     id: 'gray',
-    name: 'Gray',
-    lightSquare: Color(0xFFF8FAFC),
-    darkSquare: Color(0xFFCBD5E1),
+    name: 'Black (Soft)',
+    lightSquare: Color(0xFF252525),
+    darkSquare: Color(0xFF0D0D0D),
     highlight: Color(0x6606B6D4),
     lastMove: Color(0x663B82F6),
   );
