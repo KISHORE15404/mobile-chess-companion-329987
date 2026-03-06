@@ -5,8 +5,12 @@
     <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
     <meta name="description" content="Chess companion app built with Flutter." />
 
-    <!-- Important when this is hosted under a non-root path (common in previews) -->
-    <base href="./" />
+    <!--
+      Flutter's web runtime requires an absolute base href (must start with "/").
+      Many preview hosts mount the app at "/" and will rewrite/route appropriately.
+      This also prevents `flutter run -d web-server` from hard-failing at startup.
+    -->
+    <base href="/" />
 
     <!-- iOS meta tags & icons -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
