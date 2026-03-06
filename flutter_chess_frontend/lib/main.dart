@@ -1,54 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'app/game_controller.dart';
+import 'app/persistence.dart';
+import 'app/settings.dart';
+import 'ui/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+/// Root app widget.
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AI Build Tool',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late final GameController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = GameController(persistence: const AppPersistence());
+    // Async load; no context usage here.
+    _controller.load();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  ThemeData _theme() {
+    final ColorScheme scheme = ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      brightness: Brightness.light,
+      surface: AppColors.surface,
+    );
+
+    return ThemeData(
+      colorScheme: scheme,
+      useMaterial3: true,
+      scaffoldBackgroundColor: AppColors.background,
+      appBarTheme: const AppBarTheme(
+        titleTextStyle: TextStyle(color: AppColors.text, fontWeight: FontWeight.w800, fontSize: 18),
+        iconTheme: IconThemeData(color: AppColors.text),
       ),
-      home: const MyHomePage(title: 'flutter_chess_frontend'),
+      textTheme: const TextTheme(
+        bodyMedium: TextStyle(color: AppColors.text),
+      ),
     );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'flutter_chess_frontend App is being generated...',
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 20),
-            CircularProgressIndicator(),
-          ],
-        ),
+    return ChangeNotifierProvider<GameController>.value(
+      value: _controller,
+      child: MaterialApp(
+        title: 'Chess',
+        theme: _theme(),
+        home: const HomeScreen(),
       ),
     );
   }
