@@ -21,6 +21,20 @@
   </head>
   <body>
     <!-- Flutter will replace this with the app -->
-    <script src="flutter_bootstrap.js" async></script>
+    <script src="flutter.js" defer></script>
+    <script defer>
+      window.addEventListener('load', function () {
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: null,
+          },
+          onEntrypointLoaded: function (engineInitializer) {
+            engineInitializer.initializeEngine().then(function (appRunner) {
+              appRunner.runApp();
+            });
+          },
+        });
+      });
+    </script>
   </body>
 </html>
