@@ -1,0 +1,4 @@
+#!/bin/bash
+cd /home/kavia/workspace/code-generation/mobile-chess-companion-329987/flutter_chess_frontend
+flutter analyze
+
